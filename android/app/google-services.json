@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "757076623560",
+    "project_id": "gfgcollab",
+    "storage_bucket": "gfgcollab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757076623560:android:5c9bf2721aa065772b65fd",
+        "android_client_info": {
+          "package_name": "com.example.gfg_collab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMGwnU_620qgTpyXwXe3ppXIPmHT8eyFs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
