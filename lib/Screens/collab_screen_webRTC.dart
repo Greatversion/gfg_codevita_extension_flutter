@@ -85,7 +85,7 @@ class _CollabScreenRtcState extends State<CollabScreenRtc> {
                 },
                 child: const Text("Hangup"),
               ),
-                        ElevatedButton(
+              ElevatedButton(
             onPressed: () {
               signaling.startScreenSharing(_localRenderer);
             },
