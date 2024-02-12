@@ -40,14 +40,14 @@ class _CollabScreenState extends State<CollabScreen> {
       appId: appId,
       channelProfile: ChannelProfileType.channelProfileCommunication,
     ));
-
+    //........................................................................................................... 
+    // await _engine.startScreenCapture(const ScreenCaptureParameters2(captureVideo: true , captureAudio: true));
     _engine.registerEventHandler(
       RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
           debugPrint("local user ${connection.localUid} joined");
-        
+
           setState(() {
-          
             _localUserJoined = true;
           });
         },

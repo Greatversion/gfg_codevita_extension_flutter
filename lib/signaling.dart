@@ -13,7 +13,7 @@ class Signaling {
           'stun:stun1.l.google.com:19302',
           'stun:stun2.l.google.com:19302',
           'stun:stun.veoh.com:3478',
-'stun:stun.vidyo.com:3478'
+          'stun:stun.vidyo.com:3478'
         ]
       }
     ]
@@ -93,7 +93,7 @@ class Signaling {
 
     // Listen for remote Ice candidates below
     roomRef.collection('calleeCandidates').snapshots().listen((snapshot) {
-      snapshot.docChanges.forEach((change) {
+      for (var change in snapshot.docChanges) {
         if (change.type == DocumentChangeType.added) {
           Map<String, dynamic> data = change.doc.data() as Map<String, dynamic>;
           print('Got new remote ICE candidate: ${jsonEncode(data)}');
@@ -105,7 +105,7 @@ class Signaling {
             ),
           );
         }
-      });
+      }
     });
     // Listen for remote ICE candidates above
 
@@ -170,7 +170,7 @@ class Signaling {
 
       // Listening for remote ICE candidates below
       roomRef.collection('callerCandidates').snapshots().listen((snapshot) {
-        snapshot.docChanges.forEach((document) {
+        for (var document in snapshot.docChanges) {
           var data = document.doc.data() as Map<String, dynamic>;
           print(data);
           print('Got new remote ICE candidate: $data');
@@ -181,15 +181,12 @@ class Signaling {
               data['sdpMLineIndex'],
             ),
           );
-        });
+        }
       });
     }
   }
 
-  Future<void> openUserMedia(
-    RTCVideoRenderer localVideo,
-    RTCVideoRenderer remoteVideo,
-  ) async {
+  Future<void> openUserMedia(RTCVideoRenderer localVideo, RTCVideoRenderer remoteVideo) async {
     var stream = await navigator.mediaDevices
         .getUserMedia({'video': true, 'audio': false});
 
@@ -201,9 +198,9 @@ class Signaling {
 
   Future<void> hangUp(RTCVideoRenderer localVideo) async {
     List<MediaStreamTrack> tracks = localVideo.srcObject!.getTracks();
-    tracks.forEach((track) {
+    for (var track in tracks) {
       track.stop();
-    });
+    }
 
     if (remoteStream != null) {
       remoteStream!.getTracks().forEach((track) => track.stop());
@@ -214,10 +211,14 @@ class Signaling {
       var db = FirebaseFirestore.instance;
       var roomRef = db.collection('rooms').doc(roomId);
       var calleeCandidates = await roomRef.collection('calleeCandidates').get();
-      calleeCandidates.docs.forEach((document) => document.reference.delete());
+      for (var document in calleeCandidates.docs) {
+        document.reference.delete();
+      }
 
       var callerCandidates = await roomRef.collection('callerCandidates').get();
-      callerCandidates.docs.forEach((document) => document.reference.delete());
+      for (var document in callerCandidates.docs) {
+        document.reference.delete();
+      }
 
       await roomRef.delete();
     }
