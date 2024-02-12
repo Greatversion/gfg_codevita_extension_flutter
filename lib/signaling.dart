@@ -185,7 +185,50 @@ class Signaling {
       });
     }
   }
+ Future<void> startScreenSharing(RTCVideoRenderer localRenderer) async {
+    // Request screen sharing permissions
+    var screenStream = await navigator.mediaDevices.getDisplayMedia({
+      
+      'video': true,
+      'audio': true, // Add 'audio' if you want to include audio in screen sharing
+    });
 
+    // Stop the existing local stream (camera video)
+    localStream?.getTracks().forEach((track) {
+      track.stop();
+    });
+
+    // Set the new local stream to the screen sharing stream
+    localStream = screenStream;
+    localRenderer.srcObject = screenStream;
+
+    // Notify peers about screen sharing start
+    // Implement logic to exchange signaling messages about screen sharing
+    // For example, you can send a message to the signaling server or peers
+  }
+
+  Future<void> stopScreenSharing(RTCVideoRenderer localRenderer) async {
+    // Request camera video permissions
+    var cameraStream = await navigator.mediaDevices.getUserMedia({
+      'video': true,
+      'audio': true,
+    });
+
+    // Stop the existing local stream (screen sharing)
+    localStream?.getTracks().forEach((track) {
+      track.stop();
+    });
+
+    // Set the new local stream to the camera video stream
+    localStream = cameraStream;
+    localRenderer.srcObject = cameraStream;
+
+    // Notify peers about screen sharing stop
+    // Implement logic to exchange signaling messages about stopping screen sharing
+    // For example, you can send a message to the signaling server or peers
+  }
+
+  // ... existing code
   Future<void> openUserMedia(RTCVideoRenderer localVideo, RTCVideoRenderer remoteVideo) async {
     var stream = await navigator.mediaDevices
         .getUserMedia({'video': true, 'audio': false});

@@ -13,6 +13,7 @@ class CollabScreenRtc extends StatefulWidget {
 }
 
 class _CollabScreenRtcState extends State<CollabScreenRtc> {
+  
   Signaling signaling = Signaling();
   final RTCVideoRenderer _localRenderer = RTCVideoRenderer();
   final RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
@@ -83,7 +84,21 @@ class _CollabScreenRtcState extends State<CollabScreenRtc> {
                   signaling.hangUp(_localRenderer);
                 },
                 child: const Text("Hangup"),
-              )
+              ),
+                        ElevatedButton(
+            onPressed: () {
+              signaling.startScreenSharing(_localRenderer);
+            },
+            child: const Text("Start Screen Sharing"),
+          ),
+
+          // Button to stop screen sharing
+          ElevatedButton(
+            onPressed: () {
+              signaling.stopScreenSharing(_localRenderer);
+            },
+            child: const Text("Stop Screen Sharing"),
+          ),
             ],
           ),
           const SizedBox(height: 8),
@@ -100,7 +115,7 @@ class _CollabScreenRtcState extends State<CollabScreenRtc> {
                         child: RTCVideoView(_localRenderer)),
                   ),
                   ClipOval(
-                    // ignore: unnecessary_null_comparison
+                    // ignore: unnecessary_null_comparison 
                     child: SizedBox(
                       width: 250, // Adjust the size as needed
                       height: 250, // Adjust the size as needed
